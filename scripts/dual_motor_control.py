@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
 import rospy
-from dynamixel_sdk import *  # Uses Dynamixel SDK library
+from dynamixel_sdk import *
 import time
 
-# ----------------------------- #
-# Dynamixel AX-12A Setup
+# Dynamixel AX-12A/12+ Setup
 ADDR_TORQUE_ENABLE      = 24
 ADDR_GOAL_POSITION      = 30
 LEN_GOAL_POSITION       = 2
@@ -16,8 +14,8 @@ DEVICENAME              = '/dev/ttyUSB0'
 TORQUE_ENABLE           = 1
 TORQUE_DISABLE          = 0
 
-DXL_IDS = [23, 24]  # Your motor IDs
-# ----------------------------- #
+DXL_IDS = [23, 24]
+
 
 
 def enable_torque(portHandler, packetHandler, dxl_id):
@@ -43,7 +41,6 @@ def ping_motor(portHandler, packetHandler, dxl_id):
 
 
 def move_individual(portHandler, packetHandler, dxl_id, position):
-    # Write goal position to single motor
     result, error = packetHandler.write2ByteTxRx(portHandler, dxl_id, ADDR_GOAL_POSITION, position)
     if result != COMM_SUCCESS:
         rospy.logerr(f"Write failed for motor {dxl_id}: {packetHandler.getTxRxResult(result)}")
@@ -58,11 +55,9 @@ def move_individual(portHandler, packetHandler, dxl_id, position):
 def main():
     rospy.init_node('dual_motor_controller_node')
 
-    # Initialize Port & Packet handlers
     portHandler = PortHandler(DEVICENAME)
     packetHandler = PacketHandler(PROTOCOL_VERSION)
 
-    # Open and set port
     if not portHandler.openPort():
         rospy.logerr("Failed to open port")
         return
@@ -70,20 +65,17 @@ def main():
         rospy.logerr("Failed to set baudrate")
         return
 
-    # Ping and enable torque on each motor
     for dxl_id in DXL_IDS:
         if not ping_motor(portHandler, packetHandler, dxl_id):
             rospy.logerr(f"Motor {dxl_id} not responding to ping. Check wiring/power.")
         enable_torque(portHandler, packetHandler, dxl_id)
 
-    # Test moving each motor individually
     for dxl_id in DXL_IDS:
         move_individual(portHandler, packetHandler, dxl_id, 512)
         time.sleep(1)
         move_individual(portHandler, packetHandler, dxl_id, 256)
         time.sleep(1)
     
-    # -------------------------
     # After torque enable:
     ADDR_MOVING_SPEED = 32
     SPEED = 300
@@ -98,14 +90,11 @@ def main():
             rospy.logerr(f"Motor {dxl_id} error setting speed: {packetHandler.getRxPacketError(error)}")
         else:
             rospy.loginfo(f"Speed set to {SPEED} on motor {dxl_id}")
-    # -------------------------
 
-
-    # Create GroupSyncWrite instance
     groupSyncWrite = GroupSyncWrite(portHandler, packetHandler, ADDR_GOAL_POSITION, LEN_GOAL_POSITION)
 
     # Alternate goal positions
-    goal_positions = [[256, 768], [768, 256]]  # for 2 motors: [pos1_motor12, pos2_motor33]
+    goal_positions = [[256, 768], [768, 256]]
 
     rate = rospy.Rate(0.5)  # 0.5 Hz = every 2 seconds
     i = 0
@@ -117,7 +106,7 @@ def main():
         param1 = [pos1 & 0xFF, (pos1 >> 8) & 0xFF]
         param2 = [pos2 & 0xFF, (pos2 >> 8) & 0xFF]
 
-        # Add parameters with checks
+        # Adding parameters with checks
         if not groupSyncWrite.addParam(DXL_IDS[0], param1):
             rospy.logerr(f"Failed to add param for motor {DXL_IDS[0]}")
         if not groupSyncWrite.addParam(DXL_IDS[1], param2):

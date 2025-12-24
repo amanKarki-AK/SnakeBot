@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
 import rospy
 import time
 import math
 from dynamixel_sdk import *
 
-# ----------------------------- #
-# Dynamixel AX-12A Setup
+# Dynamixel AX-12A/12+ Setup
 ADDR_TORQUE_ENABLE      = 24
 ADDR_GOAL_POSITION      = 30
 LEN_GOAL_POSITION       = 2
@@ -21,8 +19,6 @@ TORQUE_DISABLE          = 0
 
 # 12 Dynamixels in X-Y-X repeating pattern
 DXL_IDS = list(range(1, 13))
-# ----------------------------- #
-
 
 def enable_motor(portHandler, packetHandler, dxl_id):
     packetHandler.write1ByteTxRx(portHandler, dxl_id, ADDR_TORQUE_ENABLE, TORQUE_ENABLE)
@@ -37,8 +33,8 @@ def sidewinding_positions(num_motors, t):
     - Vertical motors (odd index) use AMP_V
     """
 
-    AMP_H = 200  # horizontal amplitude
-    AMP_V = 100   # vertical amplitude
+    AMP_H = 200
+    AMP_V = 100
     FREQ = 0.3
     PHASE_SHIFT = 1.4
 
@@ -86,7 +82,7 @@ def main():
         rospy.logerr("Failed to set baud")
         return
 
-    # Enable torque & set speed
+    # Enable torque
     for dxl_id in DXL_IDS:
         enable_motor(portHandler, packetHandler, dxl_id)
         rospy.loginfo(f"Enabled motor {dxl_id}")
@@ -107,8 +103,6 @@ def main():
         packetHandler.write1ByteTxRx(portHandler, dxl_id, ADDR_TORQUE_ENABLE, TORQUE_DISABLE)
 
     portHandler.closePort()
-
-
 
 if __name__ == "__main__":
     try:

@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
 import rospy
-from dynamixel_sdk import *  # Uses Dynamixel SDK library
+from dynamixel_sdk import *
 import time
 
-# ----------------------------- #
-# Dynamixel AX-12A Setup
+# Dynamixel AX-12A/12+ Setup
 ADDR_TORQUE_ENABLE      = 24
 ADDR_GOAL_POSITION      = 30
 LEN_GOAL_POSITION       = 2
