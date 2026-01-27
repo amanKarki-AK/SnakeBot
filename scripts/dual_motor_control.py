@@ -7,7 +7,7 @@ ADDR_TORQUE_ENABLE      = 24
 ADDR_GOAL_POSITION      = 30
 LEN_GOAL_POSITION       = 2
 
-PROTOCOL_VERSION        = 2.0
+PROTOCOL_VERSION        = 1.0
 BAUDRATE                = 115200
 DEVICENAME              = '/dev/ttyUSB0'
 
