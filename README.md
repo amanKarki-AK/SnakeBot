@@ -12,7 +12,7 @@ The project was developed in progressive stages — from dual-motor validation t
 
 ---
 
-<img src="media/Snake.gif" width="900" />
+<img src="media/Snake.gif" width="600" />
 
 ## Objectives
 
