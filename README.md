@@ -193,10 +193,10 @@ This project is released for educational and research purposes.
 <br />
 <a href="https://github.com/rakmod-ed">
   <img src="https://github.com/rakmod-ed.png" width="35" style="vertical-align:middle" />
-  <strong> Kumar Ayush </strong>
+  <strong> Omkar Hurne </strong>
 </a>
 <br />
 <a href="https://github.com/kumar-ayush32">
   <img src="https://github.com/kumar-ayush32.png" width="35" style="vertical-align:middle" />
-  <strong> Omkar Hurne </strong>
+  <strong> Kumar Ayush </strong>
 </a
