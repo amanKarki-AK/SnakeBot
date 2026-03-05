@@ -8,11 +8,11 @@
 
 **Snake Bot** is a modular, biologically inspired snake robot built from 12 Dynamixel AX-12A servo motors. Inspired by the lateral undulation and sidewinding gait of real snakes, this robot uses sinusoidal position control across alternating horizontal and vertical motor axes to achieve smooth, coordinated locomotion.
 
-The project was developed in progressive stages — from dual-motor validation to full 12-motor sidewinding — and runs entirely on a PC via the Dynamixel SDK within ROS.
+The project was developed in progressive stages from dual-motor validation to full 12-motor sidewinding and runs entirely on a PC via the Dynamixel SDK within ROS.
 
 ---
 
-<img src="media/Snake.gif" width="600" />
+<img src="media/Snake.gif" width="650" />
 
 ## Objectives
 
@@ -91,7 +91,7 @@ Index:   0    1    2    3    4    5    6    7    8    9   10   11
 
 ## Development Stages
 
-### Stage 1 — Dual Motor Control
+### Stage 1 - Dual Motor Control
 **File:** `dual_motor_control.py`
 
 Validated basic communication with 2 motors (IDs 23, 24). Tested individual moves, ping verification, torque enable/disable, and synchronized position commands using `GroupSyncWrite`. Motors alternated between positions 256 and 768.
@@ -104,7 +104,7 @@ Rate: 0.5 Hz
 
 ---
 
-### Stage 2 — Quad Motor Control
+### Stage 2 - Quad Motor Control
 **File:** `quad_motor_control.py`
 
 Expanded to 4 motors (IDs 1–4). Introduced `move_all_simultaneously()` using `GroupSyncWrite` to send positions to all motors in a single TTL packet. Set individual motor speeds. Alternated between two mirrored position sets.
@@ -118,7 +118,7 @@ Speed: 256
 
 ---
 
-### Stage 3 — Full Sidewinding (12 Motors)
+### Stage 3 - Full Sidewinding (12 Motors)
 **File:** `snake_sidewinding.py`
 
 Full 12-motor sidewinding gait. Each motor receives a sinusoidally-generated goal position at 50 Hz. Horizontal and vertical motors use different amplitudes and a phase offset to produce the characteristic sidewinding wave.
@@ -152,14 +152,14 @@ Where:
 - `FREQ = 0.3` Hz = wave propagation frequency
 - `PHASE_SHIFT = 1.4` rad = offset between H and V planes
 - `t` = elapsed time in seconds
-- `i` = motor index (0–11)
+- `i` = motor index (0-11)
 
 This produces a traveling wave along the body, with the horizontal/vertical phase offset lifting and propelling the robot laterally — mimicking real sidewinding locomotion.
 
 ---
 
 ### Motor ID Configuration
-Set motor IDs 1–12 using the [Dynamixel Wizard](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_wizard2/) before running any scripts.
+Set motor IDs 1-12 using the [Dynamixel Wizard](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_wizard2/) before running any scripts.
 
 
 ## ⚠️ Safety Notes
@@ -183,3 +183,16 @@ This project is released for educational and research purposes.
 - [ROBOTIS](https://www.robotis.com/) for the Dynamixel AX-12A and SDK
 - ROS community for open-source robotics middleware
 - Biological locomotion research on snake gaits for motion inspiration
+
+## 👥 Collaborators
+
+
+<a href="https://github.com/amanKarki-AK">
+  <img src="https://github.com/amanKarki-AK.png" width="35" style="vertical-align:middle" />
+  <strong> Aman Karki </strong>
+</a>
+<br />
+<a href="https://github.com/rakmod-ed">
+  <img src="https://github.com/rakmod-ed.png" width="35" style="vertical-align:middle" />
+  <strong> Omkar Hurne </strong>
+</a>
