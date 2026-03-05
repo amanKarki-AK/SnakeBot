@@ -14,9 +14,7 @@ DEVICENAME              = '/dev/ttyUSB0'
 TORQUE_ENABLE           = 1
 TORQUE_DISABLE          = 0
 
-# DXL_IDS = [1, 2]  # Your motor IDs (for 2 motors)
-DXL_IDS = [1, 2, 3, 4]  # Expanded to 4 motors
-# ----------------------------- #
+DXL_IDS = [1, 2, 3, 4]
 
 
 def enable_torque(portHandler, packetHandler, dxl_id):
@@ -42,7 +40,7 @@ def ping_motor(portHandler, packetHandler, dxl_id):
 
 
 def move_individual(portHandler, packetHandler, dxl_id, position):
-    # Write goal position to single motor
+    # Goal position to single motor
     result, error = packetHandler.write2ByteTxRx(portHandler, dxl_id, ADDR_GOAL_POSITION, position)
     if result != COMM_SUCCESS:
         rospy.logerr(f"Write failed for motor {dxl_id}: {packetHandler.getTxRxResult(result)}")
@@ -99,7 +97,6 @@ def main():
         move_individual(portHandler, packetHandler, dxl_id, 256)
         time.sleep(1)
     
-    # -------------------------
     # After torque enable:
     ADDR_MOVING_SPEED = 32
     SPEED = 256
@@ -114,7 +111,6 @@ def main():
             rospy.logerr(f"Motor {dxl_id} error setting speed: {packetHandler.getRxPacketError(error)}")
         else:
             rospy.loginfo(f"Speed set to {SPEED} on motor {dxl_id}")
-    # -------------------------
 
     # Alternate goal positions for the 4 motors
     goal_positions = [[512, 0, 512, 0], [0, 512, 0, 512]] # 2 sets of goal positions for 4 motors
