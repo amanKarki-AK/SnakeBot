@@ -10,7 +10,6 @@
 
 The project was developed in progressive stages from dual-motor validation to full 12-motor sidewinding and runs entirely on a PC via the Dynamixel SDK within ROS.
 
----
 
 <img src="media/Snake.gif" width="650" />
 
