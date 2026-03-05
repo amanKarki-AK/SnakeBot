@@ -12,6 +12,8 @@ The project was developed in progressive stages — from dual-motor validation t
 
 ---
 
+<img src="media/Snake.gif" width="900" />
+
 ## Objectives
 
 - Replicate serpentine locomotion.
@@ -36,7 +38,7 @@ The project was developed in progressive stages — from dual-motor validation t
 
 ### Topology
 
-<img src="media/Snake-bot-block-diagram.png" width="900" />
+<img src="media/snake_bot_block_diagram.png" width="900" />
 
 ### Power Architecture
 - 12 motors are split into **3 groups of 4** for chained power sharing
